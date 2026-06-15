@@ -1,0 +1,161 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de Salas — Grupo Equilibrium</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:#EEF2F7;color:#16243A;padding-bottom:40px;}
+header{background:linear-gradient(115deg,#15355A,#2E75B6);color:#fff;padding:18px 22px;}
+header h1{font-size:19px;font-weight:800;}
+header p{font-size:12px;opacity:.9;margin-top:3px;}
+.kpis{position:sticky;top:0;z-index:10;display:flex;gap:10px;background:#fff;padding:12px 22px;
+  box-shadow:0 2px 8px rgba(20,40,70,.08);flex-wrap:wrap;}
+.kpi{flex:1;min-width:130px;border-left:4px solid #2E75B6;background:#F4F7FB;border-radius:8px;padding:8px 12px;}
+.kpi b{display:block;font-size:24px;font-weight:800;color:#1F4E79;line-height:1.1;}
+.kpi.alt b{color:#2E9E78;} .kpi.warn b{color:#C0526E;} .kpi.occ b{color:#5B3FA8;}
+.kpi span{font-size:11px;color:#5A6B80;font-weight:600;}
+.toolbar{display:flex;gap:8px;align-items:center;padding:12px 22px 0;flex-wrap:wrap;}
+.btn{font-size:12px;font-weight:700;border:1px solid #cdd9e6;background:#fff;color:#1F4E79;border-radius:7px;
+  padding:7px 12px;cursor:pointer;}
+.btn:hover{background:#eaf1f8;} .btn.primary{background:#1F4E79;color:#fff;border-color:#1F4E79;}
+.wrap{padding:14px 22px;}
+.floor{margin-top:18px;}
+.floorh{font-size:13px;font-weight:800;color:#1F4E79;margin-bottom:8px;border-bottom:2px solid #dbe6f1;padding-bottom:4px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
+.card{background:#fff;border:1px solid #e2eaf3;border-left:5px solid var(--c);border-radius:10px;padding:10px 12px;}
+.card .sname{font-size:13px;font-weight:800;color:#1F4E79;}
+.card .pname{font-size:11px;color:#5A6B80;font-weight:600;margin-bottom:6px;min-height:14px;}
+table.tg{border-collapse:collapse;width:100%;}
+table.tg td,table.tg th{text-align:center;font-size:10px;padding:1px;}
+table.tg th{color:#8A99AD;font-weight:700;}
+table.tg td.lbl{color:#3B4A60;font-weight:800;width:20px;}
+.cellbtn{width:100%;height:20px;border-radius:4px;border:1px solid #d7e0ec;background:#EEF2F7;cursor:pointer;}
+.cellbtn.on{background:var(--c);border-color:var(--c);}
+.cellbtn.closed{background:repeating-linear-gradient(45deg,#DDE3EC 0,#DDE3EC 2px,#EEF2F7 2px,#EEF2F7 4px);cursor:not-allowed;}
+.cardfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:#5A6B80;}
+.cardfoot b{color:#1F4E79;}
+.mini{font-size:10px;border:1px solid #cdd9e6;background:#fff;border-radius:5px;padding:2px 6px;cursor:pointer;color:#5A6B80;}
+.legend{font-size:11px;color:#5A6B80;padding:0 22px;margin-top:8px;}
+.legend s{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;text-decoration:none;}
+footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
+.unittab{font-weight:800;font-size:14px;color:#15355A;margin:18px 22px 0;}
+.printtitle{display:none;}
+.pt-h{font-size:18px;font-weight:800;color:#15355A;}
+.pt-s{font-size:11px;color:#5A6B80;margin-top:2px;}
+@media print{
+  @page{size:A4 landscape;margin:9mm;}
+  body{background:#fff;padding:0;}
+  header{display:none;}
+  .toolbar,.kpis,.legend,footer{display:none!important;}
+  .printtitle{display:block;margin:0 0 8px;border-bottom:2px solid #1F4E79;padding-bottom:6px;}
+  .wrap{padding:0;}
+  .unittab{margin:10px 0 4px;font-size:14px;}
+  .floor{break-inside:avoid;margin-top:8px;}
+  .grid{grid-template-columns:repeat(4,1fr);gap:6px;}
+  .card{break-inside:avoid;box-shadow:none;}
+  .mini{display:none!important;}
+  .cardfoot{font-size:9px;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+}
+</style></head><body>
+<header><h1>Calculadora de Salas e Disponibilidade</h1>
+<p>Grupo Equilibrium · base do croqui de 10/06/2026 · clique nos turnos para ocupar/liberar e veja o impacto na hora</p></header>
+<div class="printtitle" id="printtitle"></div>
+<div class="kpis">
+  <div class="kpi"><b id="kFree">—</b><span>turnos livres / semana</span></div>
+  <div class="kpi occ"><b id="kOcc">—</b><span>taxa de ocupação</span></div>
+  <div class="kpi alt"><b id="kRooms">—</b><span>salas totalmente livres</span></div>
+  <div class="kpi warn"><b id="kUsed">—</b><span>turnos ocupados</span></div>
+</div>
+<div class="toolbar">
+  <button class="btn primary" id="reset">↺ Restaurar agenda atual</button>
+  <button class="btn" id="freeAll">Liberar tudo</button>
+  <button class="btn primary" id="print">⬇ Baixar PDF / Imprimir</button>
+  <span id="perfloor" style="font-size:11px;color:#5A6B80;margin-left:auto;"></span>
+</div>
+<div class="legend"><s style="background:#2E75B6"></s> ocupado &nbsp; <s style="background:#EEF2F7;border:1px solid #d7e0ec"></s> livre &nbsp; <s class="closed" style="background:#DDE3EC"></s> fechado (sáb tarde/noite) &nbsp;·&nbsp; P1 7–12h · P2 12–16h · P3 16–20h · colunas 2ª–Sáb</div>
+<div class="wrap" id="app"></div>
+<footer>Os números recalculam automaticamente. "Restaurar agenda atual" volta tudo ao estado do croqui. Cada sala tem 16 turnos/semana (5 dias × 3 períodos + sábado de manhã).</footer>
+<script>
+const ROOMS=[{"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 31", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 32", "name": "Francisca, Kênia", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 33", "name": "Jéssica", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 34", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 35", "name": "Bruno, Sílvia", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [1, 0, 0], [1, 1, 1], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 36", "name": "Natália", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 37", "name": "Wessilon", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 21", "name": "Pâmela", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 22", "name": "Emilly", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 23", "name": "Taís", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 24", "name": "Karolina", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[0, 1, 1], [1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 1, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 25", "name": "Vitor, Marcus", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 0, 0], [1, 0, 0], [0, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 26", "name": "Lucas, Wellington", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 1, 1], [0, 0, 0], [0, 1, 1], [0, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 27", "name": "Luan, Priscila, André", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [0, 1, 1], [1, 1, 1], [0, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Laís", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Gabriela", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Rosana, Jeniffer", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Vitória", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 0], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Yuri, Michelle", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mara", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Mariana, Jeniffer", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [1, 0, 0], [1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Ana Maria", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Daiane", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Hugo", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Aline", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Lara", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [0, 0, 0], [0, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mayumi", "esp": "Psicologia Adolescência/Infantil", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 18", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 19", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 20", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 21", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 22", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 23", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 24", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 01", "name": "Mona", "esp": "Psicomotricidade", "color": "#5B6BB5", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 02", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 03", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 04", "name": "Sandra", "esp": "Musicoterapia", "color": "#8E6FB5", "m": [[0, 0, 0], [0, 1, 1], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 05", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 06", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]]}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 07", "name": "Eduardo", "esp": "Terapia Ocupacional", "color": "#0E8F8F", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]]}];
+const UNITS=["UNIDADE 1", "UNIDADE 2"];
+const DAYS=["2ª","3ª","4ª","5ª","6ª","Sáb"];
+let state=JSON.parse(JSON.stringify(ROOMS));
+function recalc(){
+  let free=0,used=0,total=0,fullfree=0;
+  const byFloor={};
+  state.forEach(r=>{
+    let rfree=0,rtot=0;
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++){
+      const v=r.m[d][s]; if(v===2)continue; rtot++; total++;
+      if(v===1){used++;}else{free++;rfree++;}
+    }
+    if(rfree===rtot)fullfree++;
+    const key=r.u+" · "+r.fl; byFloor[key]=(byFloor[key]||0)+rfree;
+  });
+  document.getElementById('kFree').textContent=free;
+  document.getElementById('kUsed').textContent=used;
+  document.getElementById('kRooms').textContent=fullfree;
+  document.getElementById('kOcc').textContent=(total? Math.round(used/total*1000)/10:0)+'%';
+  document.getElementById('perfloor').textContent=Object.entries(byFloor).map(([k,v])=>k.split(' · ')[1]+': '+v).join('  ·  ');
+}
+function render(){
+  const app=document.getElementById('app'); app.innerHTML='';
+  UNITS.forEach(un=>{
+    const ut=document.createElement('div'); ut.className='unittab'; ut.textContent=un; app.appendChild(ut);
+    const floors=[...new Set(state.filter(r=>r.u===un).map(r=>r.fl))];
+    floors.forEach(fl=>{
+      const fd=document.createElement('div'); fd.className='floor';
+      fd.innerHTML='<div class="floorh">'+fl+'</div>';
+      const g=document.createElement('div'); g.className='grid';
+      state.forEach((r,ri)=>{
+        if(r.u!==un||r.fl!==fl)return;
+        const card=document.createElement('div'); card.className='card'; card.style.setProperty('--c',r.color);
+        let html='<div class="sname">'+r.sala+'</div><div class="pname">'+(r.name||'')+(r.esp?' · '+r.esp:'')+'</div>';
+        html+='<table class="tg"><tr><th></th>'+DAYS.map(d=>'<th>'+d+'</th>').join('')+'</tr>';
+        for(let s=0;s<3;s++){
+          html+='<tr><td class="lbl">P'+(s+1)+'</td>';
+          for(let d=0;d<6;d++){
+            const v=r.m[d][s];
+            if(v===2)html+='<td><button class="cellbtn closed" disabled></button></td>';
+            else html+='<td><button class="cellbtn'+(v===1?' on':'')+'" data-r="'+ri+'" data-d="'+d+'" data-s="'+s+'"></button></td>';
+          }
+          html+='</tr>';
+        }
+        html+='</table><div class="cardfoot"><span><b class="rf">·</b> livres</span><span><button class="mini" data-occ="'+ri+'">ocupar</button> <button class="mini" data-free="'+ri+'">liberar</button></span></div>';
+        card.innerHTML=html; g.appendChild(card);
+      });
+      fd.appendChild(g); app.appendChild(fd);
+    });
+  });
+  bind(); updateCardFooters(); recalc();
+}
+function updateCardFooters(){
+  document.querySelectorAll('.card').forEach(card=>{
+    const btn=card.querySelector('[data-r],[data-occ],[data-free]'); 
+  });
+  state.forEach((r,ri)=>{
+    let rf=0; for(let d=0;d<6;d++)for(let s=0;s<3;s++){if(r.m[d][s]===0)rf++;}
+    const el=document.querySelectorAll('.card')[ri]; if(el){const b=el.querySelector('.rf'); if(b)b.textContent=rf;}
+  });
+}
+function bind(){
+  document.querySelectorAll('.cellbtn[data-r]').forEach(b=>{
+    b.onclick=()=>{const r=+b.dataset.r,d=+b.dataset.d,s=+b.dataset.s;
+      state[r].m[d][s]=state[r].m[d][s]===1?0:1; b.classList.toggle('on'); updateCardFooters(); recalc();};
+  });
+  document.querySelectorAll('[data-occ]').forEach(b=>{b.onclick=()=>{const r=+b.dataset.occ;
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[r].m[d][s]!==2)state[r].m[d][s]=1; render2(r);};});
+  document.querySelectorAll('[data-free]').forEach(b=>{b.onclick=()=>{const r=+b.dataset.free;
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[r].m[d][s]!==2)state[r].m[d][s]=0; render2(r);};});
+}
+function render2(){ render(); }
+document.getElementById('reset').onclick=()=>{state=JSON.parse(JSON.stringify(ROOMS)); render();};
+document.getElementById('print').onclick=()=>{
+  const f=document.getElementById('kFree').textContent,o=document.getElementById('kOcc').textContent,rm=document.getElementById('kRooms').textContent;
+  document.getElementById('printtitle').innerHTML='<div class="pt-h">Guia de Salas — seleção atual</div>'+
+    '<div class="pt-s">Grupo Equilibrium · base do croqui de 10/06/2026 · '+f+' turnos livres · '+o+' de ocupação · '+rm+' salas totalmente livres</div>';
+  window.print();
+};
+document.getElementById('freeAll').onclick=()=>{state.forEach(r=>{for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(r.m[d][s]!==2)r.m[d][s]=0;}); render();};
+render();
+</script></body></html>
