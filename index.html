@@ -62,7 +62,7 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
 </style></head><body>
 <header>
   <div><h1>Guia de Salas — Grupo Equilibrium</h1><p>Sistema de salas e disponibilidade &middot; base do croqui de 10/06/2026</p></div>
-  <div class="status local" id="status">Modo local</div>
+  <div class="status local" id="status" style="cursor:pointer" title="Configurar banco de dados">Modo local</div>
 </header>
 <div class="printtitle" id="printtitle"></div>
 <div class="kpis">
@@ -75,6 +75,7 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
   <button class="btn primary" id="print">&#11015; Baixar PDF / Imprimir</button>
   <button class="btn" id="reset">&#8634; Restaurar agenda base</button>
   <button class="btn" id="reload">&#8635; Recarregar do banco</button>
+  <button class="btn" id="cfg">&#9881; Configurar banco</button>
   <span id="perfloor" style="font-size:11px;color:#5A6B80;margin-left:auto;"></span>
 </div>
 <div class="legend"><s style="background:#2E75B6"></s> ocupado &nbsp; <s style="background:#EEF2F7;border:1px solid #d7e0ec"></s> livre &nbsp; <s class="closed" style="background:#DDE3EC"></s> fechado &nbsp;&middot;&nbsp; P1 7&ndash;12h &middot; P2 12&ndash;16h &middot; P3 16&ndash;20h &middot; colunas 2&ordf;&ndash;Sab &middot; alteracoes salvam automaticamente</div>
@@ -95,17 +96,38 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
   </div>
 </div></div>
 
+<div class="modal" id="cfgModal"><div class="mbox">
+  <h3>Conectar ao banco (Supabase)</h3>
+  <label>Project URL</label>
+  <input id="cUrl" placeholder="https://xxxx.supabase.co">
+  <label>anon public key</label>
+  <input id="cKey" placeholder="cole a anon public key">
+  <div style="font-size:11px;color:#5A6B80;margin-top:8px">As chaves ficam salvas apenas neste navegador. Rode antes o <b>schema.sql</b> no Supabase. A 1&ordf; conexao popula as 42 salas automaticamente.</div>
+  <div class="mact">
+    <button class="btn" id="cDisc">Desconectar</button>
+    <button class="btn primary" id="cConnect">Conectar</button>
+  </div>
+</div></div>
+
 <script>
 // ===== CONFIG: cole as chaves do seu Supabase para ativar o banco =====
-const SUPABASE_URL = "https://cvzljysxvdhfngxnedhi.supabase.co/rest/v1/";   // ex.: https://xxxx.supabase.co
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2emxqeXN4dmRoZm5neG5lZGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MzkwNjcsImV4cCI6MjA5ODAxNTA2N30.CN3urKqz94xyqSJqZ9MeVejchYiECKdAXYuwva3n-X4";   // anon public key
+const SUPABASE_URL = "https://cvzljysxvdhfngxnedhi.supabase.co";   // SEM /rest/v1/ no final
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2emxqeXN4dmRoZm5neG5lZGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MzkwNjcsImV4cCI6MjA5ODAxNTA2N30.CN3urKqz94xyqSJqZ9MeVejchYiECKdAXYuwva3n-X4";   // anon public key (pode ficar pública)
 // =====================================================================
 const SEED=[{"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 31", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 31", "ordem": 0}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 32", "name": "Francisca, Kênia", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 32", "ordem": 1}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 33", "name": "Jéssica", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 33", "ordem": 2}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 34", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 34", "ordem": 3}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 35", "name": "Bruno, Sílvia", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [1, 0, 0], [1, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 35", "ordem": 4}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 36", "name": "Natália", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 36", "ordem": 5}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 37", "name": "Wessilon", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 37", "ordem": 6}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 21", "name": "Pâmela", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 21", "ordem": 7}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 22", "name": "Emilly", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 22", "ordem": 8}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 23", "name": "Taís", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 23", "ordem": 9}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 24", "name": "Karolina", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[0, 1, 1], [1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 24", "ordem": 10}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 25", "name": "Vitor, Marcus", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 0, 0], [1, 0, 0], [0, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 25", "ordem": 11}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 26", "name": "Lucas, Wellington", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 1, 1], [0, 0, 0], [0, 1, 1], [0, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 26", "ordem": 12}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 27", "name": "Luan, Priscila, André", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [0, 1, 1], [1, 1, 1], [0, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 27", "ordem": 13}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Laís", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 11", "ordem": 14}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Gabriela", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 12", "ordem": 15}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Rosana, Jeniffer", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 13", "ordem": 16}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Vitória", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 0], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 14", "ordem": 17}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Yuri, Michelle", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 15", "ordem": 18}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mara", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 16", "ordem": 19}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Mariana, Jeniffer", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [1, 0, 0], [1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 17", "ordem": 20}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Ana Maria", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 11", "ordem": 21}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Daiane", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 12", "ordem": 22}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Hugo", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 13", "ordem": 23}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Aline", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 14", "ordem": 24}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Lara", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [0, 0, 0], [0, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 15", "ordem": 25}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mayumi", "esp": "Psicologia Adolescência/Infantil", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 16", "ordem": 26}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 17", "ordem": 27}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 18", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 18", "ordem": 28}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 19", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 19", "ordem": 29}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 20", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 20", "ordem": 30}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 21", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 21", "ordem": 31}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 22", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 22", "ordem": 32}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 23", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 23", "ordem": 33}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 24", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 24", "ordem": 34}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 01", "name": "Mona", "esp": "Psicomotricidade", "color": "#5B6BB5", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 01", "ordem": 35}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 02", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 02", "ordem": 36}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 03", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 03", "ordem": 37}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 04", "name": "Sandra", "esp": "Musicoterapia", "color": "#8E6FB5", "m": [[0, 0, 0], [0, 1, 1], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 04", "ordem": 38}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 05", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 05", "ordem": 39}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 06", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 06", "ordem": 40}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 07", "name": "Eduardo", "esp": "Terapia Ocupacional", "color": "#0E8F8F", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 07", "ordem": 41}], UNITS=["UNIDADE 1", "UNIDADE 2"];
 const DAYS=["2\u00aa","3\u00aa","4\u00aa","5\u00aa","6\u00aa","S\u00e1b"];
 const LS_KEY="equilibrium_salas_v1";
-let SB=null, mode="local", state=[];
-try{ if(SUPABASE_URL && SUPABASE_KEY){ SB=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);} }catch(e){}
+const CFG_KEY="equilibrium_sb_cfg";
+let SB=null, mode="local", state=[], rtChannel=null;
 const $=id=>document.getElementById(id);
+function getCfg(){
+  try{ const s=localStorage.getItem(CFG_KEY); if(s){const c=JSON.parse(s); if(c.url&&c.key)return c;} }catch(e){}
+  if(SUPABASE_URL && SUPABASE_KEY) return {url:SUPABASE_URL,key:SUPABASE_KEY};
+  return null;
+}
+function cleanUrl(u){ return (u||'').trim().replace(/\/rest\/v1\/?$/i,'').replace(/\/+$/,''); }
+function makeClient(c){ try{ return (c&&c.url&&c.key)?supabase.createClient(cleanUrl(c.url),(c.key||'').trim()):null; }catch(e){ return null; } }
+SB=makeClient(getCfg());
 const clone=x=>JSON.parse(JSON.stringify(x));
 function setStatus(t,cls){const e=$('status');e.textContent=t;e.className='status '+cls;}
 
@@ -115,7 +137,13 @@ async function loadRooms(){
       if(!r.data||!r.data.length){ await seedDB(); r=await SB.from('salas').select('*').order('ordem'); }
       mode="db"; setStatus("Conectado ao banco","ok");
       return r.data.map(d=>Object.assign({id:d.id,ordem:d.ordem,u:d.unidade,fl:d.andar,sala:d.sala},d.dados));
-    }catch(e){ console.warn(e); setStatus("Banco indisponivel \u2014 modo local","err"); mode="local"; } }
+    }catch(e){ console.warn('Supabase:',e);
+      const msg=((e&&e.message)||'').toLowerCase();
+      if(msg.includes('relation')||msg.includes('does not exist')||(e&&e.code==='42P01')) setStatus("Tabela 'salas' nao existe \u2014 rode o schema.sql","err");
+      else if(msg.includes('jwt')||msg.includes('apikey')||msg.includes('invalid')||(e&&e.code==='401')) setStatus("Chave invalida \u2014 confira a anon key","err");
+      else if(msg.includes('failed to fetch')||msg.includes('networkerror')) setStatus("Sem conexao \u2014 confira a URL","err");
+      else setStatus("Banco indisponivel \u2014 modo local","err");
+      mode="local"; } }
   const ls=localStorage.getItem(LS_KEY);
   if(ls){ setStatus("Modo local (navegador)","local"); return JSON.parse(ls);}
   setStatus("Modo local","local"); return clone(SEED);
@@ -190,6 +218,22 @@ $('print').onclick=()=>{ const f=$('kFree').textContent,o=$('kOcc').textContent,
 $('reset').onclick=async()=>{ if(!confirm('Restaurar todas as salas para a agenda base? As alteracoes atuais serao substituidas.'))return;
   state=clone(SEED); render(); if(mode==='db'&&SB){ await seedDB(); } persistLocal(); };
 $('reload').onclick=async()=>{ state=await loadRooms(); render(); };
-function subscribe(){ if(mode==='db'&&SB){ SB.channel('salas-rt').on('postgres_changes',{event:'*',schema:'public',table:'salas'},async()=>{ state=await loadRooms(); render(); }).subscribe(); } }
+function subscribe(){ if(mode==='db'&&SB){ if(rtChannel){try{SB.removeChannel(rtChannel);}catch(e){}}
+  rtChannel=SB.channel('salas-rt').on('postgres_changes',{event:'*',schema:'public',table:'salas'},async()=>{ state=await loadRooms(); render(); }).subscribe(); } }
+
+// ---- painel de configuração do banco ----
+function openCfg(){ const c=getCfg(); $('cUrl').value=c?c.url:''; $('cKey').value=c?c.key:''; $('cfgModal').classList.add('show'); }
+$('cfg').onclick=openCfg;
+$('status').onclick=openCfg;
+$('cDisc').onclick=async()=>{ localStorage.removeItem(CFG_KEY); if(rtChannel&&SB){try{SB.removeChannel(rtChannel);}catch(e){}rtChannel=null;}
+  SB=null; mode="local"; $('cfgModal').classList.remove('show'); state=await loadRooms(); render(); };
+$('cConnect').onclick=async()=>{ const url=$('cUrl').value.trim(), key=$('cKey').value.trim();
+  if(!url||!key){ alert('Informe a Project URL e a anon key.'); return; }
+  localStorage.setItem(CFG_KEY,JSON.stringify({url,key})); SB=makeClient({url,key});
+  if(!SB){ setStatus("Chaves inv\u00e1lidas \u2014 modo local","err"); mode="local"; return; }
+  setStatus("Conectando...","local"); state=await loadRooms();
+  if(mode==='db'){ $('cfgModal').classList.remove('show'); }
+  render(); subscribe(); };
+
 (async function(){ state=await loadRooms(); render(); subscribe(); })();
 </script></body></html>
