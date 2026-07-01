@@ -83,6 +83,8 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
 
 <div class="modal" id="modal"><div class="mbox">
   <h3 id="mTitle">Editar sala</h3>
+  <label>Nome / número da sala</label>
+  <input id="mSala" placeholder="Ex.: SALA 31">
   <label>Nome(s) do profissional / descricao</label>
   <input id="mName" placeholder="Ex.: Fulano de Tal">
   <div class="mrow">
@@ -187,10 +189,12 @@ function bind(){
 }
 let editIdx=-1;
 function openEdit(i){ editIdx=i; const r=state[i];
-  $('mTitle').textContent='Editar '+r.sala; $('mName').value=r.name||''; $('mEsp').value=r.esp||'';
+  $('mTitle').textContent='Editar '+r.sala; $('mSala').value=r.sala||''; $('mName').value=r.name||''; $('mEsp').value=r.esp||'';
   $('mColor').value=(r.color||'#2E75B6').slice(0,7); $('modal').classList.add('show'); }
 $('mCancel').onclick=()=>$('modal').classList.remove('show');
-$('mSave').onclick=()=>{ const r=state[editIdx]; r.name=$('mName').value.trim(); r.esp=$('mEsp').value.trim(); r.color=$('mColor').value;
+$('mSave').onclick=()=>{ const r=state[editIdx];
+  const novaSala=$('mSala').value.trim(); if(novaSala) r.sala=novaSala;
+  r.name=$('mName').value.trim(); r.esp=$('mEsp').value.trim(); r.color=$('mColor').value;
   $('modal').classList.remove('show'); render(); saveRoom(r); persistLocal(); };
 $('print').onclick=()=>{ const f=$('kFree').textContent,o=$('kOcc').textContent,rm=$('kRooms').textContent;
   $('printtitle').innerHTML='<div class="pt-h">Guia de Salas \u2014 situacao atual</div><div class="pt-s">Grupo Equilibrium \u00b7 base do croqui de 10/06/2026 \u00b7 '+f+' turnos livres \u00b7 '+o+' de ocupacao \u00b7 '+rm+' salas totalmente livres</div>';
