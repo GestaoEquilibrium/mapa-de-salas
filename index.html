@@ -26,42 +26,64 @@ header p{font-size:12px;opacity:.9;margin-top:3px;}
 .card{background:#fff;border:1px solid #e2eaf3;border-left:5px solid var(--c);border-radius:10px;padding:10px 12px;}
 .card .sname{font-size:13px;font-weight:800;color:#1F4E79;display:flex;justify-content:space-between;align-items:center;}
 .card .sname .ed{font-size:10px;font-weight:700;color:#5A6B80;border:1px solid #cdd9e6;border-radius:5px;padding:1px 6px;cursor:pointer;background:#fff;}
-.card .pname{font-size:11px;color:#5A6B80;font-weight:600;margin:2px 0 6px;min-height:14px;}
-table.tg{border-collapse:collapse;width:100%;}
+.pens{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0;}
+.pen{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;border:1px solid #d7e0ec;border-radius:20px;padding:2px 8px 2px 4px;cursor:pointer;background:#fff;color:#3B4A60;}
+.pen .dot{width:12px;height:12px;border-radius:50%;flex:none;}
+.pen.penon{border-color:#15355A;box-shadow:0 0 0 2px rgba(21,53,90,.18);}
+.pen.addp{border-style:dashed;color:#5A6B80;}
+.pen.nopen{color:#9aa7b8;font-style:italic;border-style:dashed;cursor:default;}
+table.tg{border-collapse:collapse;width:100%;margin-top:2px;}
 table.tg td,table.tg th{text-align:center;font-size:10px;padding:1px;}
 table.tg th{color:#8A99AD;font-weight:700;}
 table.tg td.lbl{color:#3B4A60;font-weight:800;width:20px;}
-.cellbtn{width:100%;height:20px;border-radius:4px;border:1px solid #d7e0ec;background:#EEF2F7;cursor:pointer;}
-.cellbtn.on{background:var(--c);border-color:var(--c);}
+.cellbtn{width:100%;height:20px;border-radius:4px;border:1px solid #d7e0ec;background:#EEF2F7;cursor:pointer;font-size:8px;font-weight:800;line-height:1;padding:0;color:#fff;}
 .cellbtn.closed{background:repeating-linear-gradient(45deg,#DDE3EC 0,#DDE3EC 2px,#EEF2F7 2px,#EEF2F7 4px);cursor:not-allowed;}
 .cardfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:#5A6B80;}
 .cardfoot b{color:#1F4E79;}
 .mini{font-size:10px;border:1px solid #cdd9e6;background:#fff;border-radius:5px;padding:2px 6px;cursor:pointer;color:#5A6B80;}
-.legend{font-size:11px;color:#5A6B80;padding:0 22px;margin-top:8px;}
-.legend s{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;text-decoration:none;}
+.legendbox{background:#fff;border:1px solid #e2eaf3;border-radius:10px;margin:12px 22px 0;padding:10px 14px;}
+.legendbox h4{font-size:12px;color:#1F4E79;margin-bottom:6px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;}
+.leggrp{margin-bottom:6px;}
+.leggrp .gt{font-size:10px;font-weight:800;color:#8A99AD;text-transform:uppercase;margin:4px 0 2px;}
+.legrow{display:flex;flex-wrap:wrap;gap:5px 12px;}
+.legitem{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#3B4A60;font-weight:600;}
+.legitem .sw{width:13px;height:13px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.08);}
+.legstate{font-size:11px;color:#5A6B80;margin-top:6px;padding-top:6px;border-top:1px dashed #dbe6f1;}
+.legstate s{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;text-decoration:none;}
 footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
 .modal{position:fixed;inset:0;background:rgba(10,20,40,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;}
 .modal.show{display:flex;}
-.mbox{background:#fff;border-radius:12px;max-width:420px;width:100%;padding:18px;}
+.mbox{background:#fff;border-radius:12px;max-width:460px;width:100%;padding:18px;max-height:88vh;overflow:auto;}
 .mbox h3{font-size:15px;color:#1F4E79;margin-bottom:10px;}
 .mbox label{font-size:11px;color:#5A6B80;font-weight:700;display:block;margin:8px 0 3px;}
 .mbox input{width:100%;padding:7px 9px;border:1px solid #cdd9e6;border-radius:7px;font-size:13px;}
 .mrow{display:flex;gap:8px;}.mrow>*{flex:1;}
 .mact{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;}
+.chklist{border:1px solid #e2eaf3;border-radius:8px;padding:6px;max-height:190px;overflow:auto;}
+.chkitem{display:flex;align-items:center;gap:7px;font-size:12px;padding:3px 4px;border-radius:5px;}
+.chkitem:hover{background:#f4f7fb;}
+.chkitem .sw{width:13px;height:13px;border-radius:3px;flex:none;}
+.chkitem input{width:auto;}
+.prow{display:flex;align-items:center;gap:7px;padding:5px 4px;border-bottom:1px solid #f0f3f8;}
+.prow input[type=text]{flex:1;}
+.prow input[type=color]{width:38px;padding:2px;flex:none;}
+.prow .del{font-size:11px;color:#a13b4e;border:1px solid #eccdd4;background:#fff;border-radius:5px;padding:3px 7px;cursor:pointer;flex:none;}
+.prow .espi{width:120px;flex:none;font-size:11px;color:#5A6B80;}
 .pt-h{font-size:18px;font-weight:800;color:#15355A;}.pt-s{font-size:11px;color:#5A6B80;margin-top:2px;}
 .printtitle{display:none;}
 @media print{
   @page{size:A4 landscape;margin:9mm;}
-  body{background:#fff;padding:0;}header,.toolbar,.kpis,.legend,footer,.modal{display:none!important;}
+  body{background:#fff;padding:0;}header,.toolbar,.kpis,footer,.modal,.pens .addp,.ed,.mini{display:none!important;}
   .printtitle{display:block;margin:0 0 8px;border-bottom:2px solid #1F4E79;padding-bottom:6px;}
-  .wrap{padding:0;}.grid{grid-template-columns:repeat(4,1fr);gap:6px;}
+  .wrap{padding:0 6mm;}.grid{grid-template-columns:repeat(4,1fr);gap:6px;}
+  .legendbox{margin:0 6mm 6px;break-inside:avoid;}
   .floor{break-inside:avoid;margin-top:8px;}.card{break-inside:avoid;box-shadow:none;}
-  .ed,.mini{display:none!important;}.cardfoot{font-size:9px;}
+  .pen{cursor:default;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
 }
 </style></head><body>
 <header>
-  <div><h1>Guia de Salas — Grupo Equilibrium</h1><p>Sistema de salas e disponibilidade &middot; base do croqui de 10/06/2026</p></div>
+  <div><h1>Guia de Salas — Grupo Equilibrium</h1><p>Salas, disponibilidade e profissionais &middot; base do croqui de 10/06/2026</p></div>
   <div class="status local" id="status">Modo local</div>
 </header>
 <div class="printtitle" id="printtitle"></div>
@@ -73,23 +95,28 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
 </div>
 <div class="toolbar">
   <button class="btn primary" id="print">&#11015; Baixar PDF / Imprimir</button>
+  <button class="btn" id="profBtn">&#128100; Profissionais</button>
   <button class="btn" id="reset">&#8634; Restaurar agenda base</button>
   <button class="btn" id="reload">&#8635; Recarregar do banco</button>
   <span id="perfloor" style="font-size:11px;color:#5A6B80;margin-left:auto;"></span>
 </div>
-<div class="legend"><s style="background:#2E75B6"></s> ocupado &nbsp; <s style="background:#EEF2F7;border:1px solid #d7e0ec"></s> livre &nbsp; <s class="closed" style="background:#DDE3EC"></s> fechado &nbsp;&middot;&nbsp; P1 7&ndash;12h &middot; P2 12&ndash;16h &middot; P3 16&ndash;20h &middot; colunas 2&ordf;&ndash;Sab &middot; alteracoes salvam automaticamente</div>
+<div class="legendbox" id="legend"></div>
 <div class="wrap" id="app"></div>
-<footer>As alteracoes sao salvas no banco (ou localmente, se o banco nao estiver configurado) e ficam visiveis para todos. Cada sala tem 16 turnos/semana.</footer>
+<footer>Cada profissional tem sua cor. Nas salas compartilhadas, escolha o profissional (a "caneta" ativa) e pinte o turno em que ele atende. Alteracoes salvam no banco (ou localmente) e ficam visiveis para todos. Cada sala tem 16 turnos/semana.</footer>
 
+<!-- modal editar sala -->
 <div class="modal" id="modal"><div class="mbox">
   <h3 id="mTitle">Editar sala</h3>
   <label>Nome / número da sala</label>
   <input id="mSala" placeholder="Ex.: SALA 31">
-  <label>Nome(s) do profissional / descricao</label>
-  <input id="mName" placeholder="Ex.: Fulano de Tal">
-  <div class="mrow">
-    <div><label>Especialidade (rotulo)</label><input id="mEsp" placeholder="Ex.: Psicologia"></div>
-    <div><label>Cor</label><input id="mColor" type="color"></div>
+  <label>Profissionais que usam esta sala</label>
+  <div class="chklist" id="mProfList"></div>
+  <div style="margin-top:8px;font-size:11px;color:#5A6B80;font-weight:700;">Cadastrar novo profissional</div>
+  <div class="mrow" style="margin-top:4px;">
+    <input id="mNewNome" placeholder="Nome">
+    <input id="mNewEsp" placeholder="Especialidade">
+    <input id="mNewColor" type="color" value="#2E75B6" style="flex:none;width:42px;">
+    <button class="btn" id="mNewAdd" style="flex:none;">+ add</button>
   </div>
   <div class="mact">
     <button class="btn" id="mCancel">Cancelar</button>
@@ -97,28 +124,75 @@ footer{font-size:11px;color:#8A99AD;padding:16px 22px 0;}
   </div>
 </div></div>
 
+<!-- modal profissionais -->
+<div class="modal" id="pmodal"><div class="mbox">
+  <h3>Profissionais &middot; cores</h3>
+  <div id="pmList" style="margin-top:4px;"></div>
+  <div style="margin-top:10px;font-size:11px;color:#5A6B80;font-weight:700;">Adicionar profissional</div>
+  <div class="mrow" style="margin-top:4px;">
+    <input id="pmNome" placeholder="Nome">
+    <input id="pmEsp" placeholder="Especialidade">
+    <input id="pmColor" type="color" value="#2E75B6" style="flex:none;width:42px;">
+    <button class="btn" id="pmAdd" style="flex:none;">+ add</button>
+  </div>
+  <div class="mact"><button class="btn primary" id="pmClose">Fechar</button></div>
+</div></div>
+
 <script>
-// ===== CONFIG: cole as chaves do seu Supabase para ativar o banco =====
-const SUPABASE_URL = "https://cvzljysxvdhfngxnedhi.supabase.co";   // SEM /rest/v1/ no final
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2emxqeXN4dmRoZm5neG5lZGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MzkwNjcsImV4cCI6MjA5ODAxNTA2N30.CN3urKqz94xyqSJqZ9MeVejchYiECKdAXYuwva3n-X4";   // anon public key (pode ficar pública)
-// =====================================================================
-const SEED=[{"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 31", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 31", "ordem": 0}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 32", "name": "Francisca, Kênia", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 32", "ordem": 1}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 33", "name": "Jéssica", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 33", "ordem": 2}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 34", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 34", "ordem": 3}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 35", "name": "Bruno, Sílvia", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [1, 0, 0], [1, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 35", "ordem": 4}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 36", "name": "Natália", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [0, 1, 1], [0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 36", "ordem": 5}, {"u": "UNIDADE 1", "fl": "3º ANDAR", "sala": "SALA 37", "name": "Wessilon", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|3º ANDAR|SALA 37", "ordem": 6}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 21", "name": "Pâmela", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 21", "ordem": 7}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 22", "name": "Emilly", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 22", "ordem": 8}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 23", "name": "Taís", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 23", "ordem": 9}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 24", "name": "Karolina", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[0, 1, 1], [1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 24", "ordem": 10}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 25", "name": "Vitor, Marcus", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 0, 0], [1, 0, 0], [0, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 25", "ordem": 11}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 26", "name": "Lucas, Wellington", "esp": "Médico", "color": "#2A9CA8", "m": [[0, 1, 1], [0, 0, 0], [0, 1, 1], [0, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 26", "ordem": 12}, {"u": "UNIDADE 1", "fl": "2º ANDAR", "sala": "SALA 27", "name": "Luan, Priscila, André", "esp": "Médico", "color": "#2A9CA8", "m": [[1, 1, 1], [1, 1, 1], [0, 1, 1], [1, 1, 1], [0, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|2º ANDAR|SALA 27", "ordem": 13}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Laís", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 11", "ordem": 14}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Gabriela", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 12", "ordem": 15}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Rosana, Jeniffer", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 13", "ordem": 16}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Vitória", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 0], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 14", "ordem": 17}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Yuri, Michelle", "esp": "Psicologia", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 15", "ordem": 18}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mara", "esp": "Psicologia", "color": "#2E75B6", "m": [[0, 1, 1], [0, 1, 1], [1, 0, 0], [0, 1, 1], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 16", "ordem": 19}, {"u": "UNIDADE 1", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Mariana, Jeniffer", "esp": "Neuropsicologia", "color": "#1F4E79", "m": [[1, 0, 0], [1, 0, 0], [1, 1, 1], [1, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 1|1º ANDAR|SALA 17", "ordem": 20}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 11", "name": "Ana Maria", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 11", "ordem": 21}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 12", "name": "Daiane", "esp": "Psicopedagogia", "color": "#E08A3C", "m": [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 12", "ordem": 22}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 13", "name": "Hugo", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 13", "ordem": 23}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 14", "name": "Aline", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 14", "ordem": 24}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 15", "name": "Lara", "esp": "Fonoaudiologia", "color": "#2E9E78", "m": [[1, 1, 1], [0, 0, 0], [0, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 15", "ordem": 25}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 16", "name": "Mayumi", "esp": "Psicologia Adolescência/Infantil", "color": "#2E75B6", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 16", "ordem": 26}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 17", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 17", "ordem": 27}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 18", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 18", "ordem": 28}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 19", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 19", "ordem": 29}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 20", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 20", "ordem": 30}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 21", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 21", "ordem": 31}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 22", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 22", "ordem": 32}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 23", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 23", "ordem": 33}, {"u": "UNIDADE 2", "fl": "1º ANDAR", "sala": "SALA 24", "name": "Terapia ABA", "esp": "ABA", "color": "#C0526E", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 2, 2]], "id": "UNIDADE 2|1º ANDAR|SALA 24", "ordem": 34}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 01", "name": "Mona", "esp": "Psicomotricidade", "color": "#5B6BB5", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [1, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 01", "ordem": 35}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 02", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 02", "ordem": 36}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 03", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 03", "ordem": 37}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 04", "name": "Sandra", "esp": "Musicoterapia", "color": "#8E6FB5", "m": [[0, 0, 0], [0, 1, 1], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 04", "ordem": 38}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 05", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 05", "ordem": 39}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 06", "name": "Livre", "esp": "", "color": "#8FA0B4", "m": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 06", "ordem": 40}, {"u": "UNIDADE 2", "fl": "TÉRREO", "sala": "SALA 07", "name": "Eduardo", "esp": "Terapia Ocupacional", "color": "#0E8F8F", "m": [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 2, 2]], "id": "UNIDADE 2|TÉRREO|SALA 07", "ordem": 41}], UNITS=["UNIDADE 1", "UNIDADE 2"];
+const SUPABASE_URL = "https://cvzljysxvdhfngxnedhi.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2emxqeXN4dmRoZm5neG5lZGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MzkwNjcsImV4cCI6MjA5ODAxNTA2N30.CN3urKqz94xyqSJqZ9MeVejchYiECKdAXYuwva3n-X4";
+
+const PROFS_SEED=[{"id":"p01","nome":"Francisca","esp":"Psicologia","color":"#BA3B3B","ini":"FR"},{"id":"p02","nome":"Kênia","esp":"Psicologia","color":"#3BBA60","ini":"KÊ"},{"id":"p03","nome":"Jéssica","esp":"Psicologia","color":"#853BBA","ini":"JÉ"},{"id":"p04","nome":"Bruno","esp":"Médico","color":"#BAAA3B","ini":"BR"},{"id":"p05","nome":"Sílvia","esp":"Médico","color":"#3BA5BA","ini":"SÍ"},{"id":"p06","nome":"Natália","esp":"Neuropsicologia","color":"#BA3B80","ini":"NA"},{"id":"p07","nome":"Wessilon","esp":"Neuropsicologia","color":"#5ABA3B","ini":"WE"},{"id":"p08","nome":"Pâmela","esp":"Neuropsicologia","color":"#403BBA","ini":"PÂ"},{"id":"p09","nome":"Emilly","esp":"Neuropsicologia","color":"#BA653B","ini":"EM"},{"id":"p10","nome":"Taís","esp":"Neuropsicologia","color":"#3BBA8A","ini":"TA"},{"id":"p11","nome":"Karolina","esp":"Neuropsicologia","color":"#B03BBA","ini":"KA"},{"id":"p12","nome":"Vitor","esp":"Médico","color":"#9FBA3B","ini":"VI"},{"id":"p13","nome":"Marcus","esp":"Médico","color":"#3B7ABA","ini":"MA"},{"id":"p14","nome":"Lucas","esp":"Médico","color":"#BA3B55","ini":"LU"},{"id":"p15","nome":"Wellington","esp":"Médico","color":"#3BBA46","ini":"WE"},{"id":"p16","nome":"Luan","esp":"Médico","color":"#6B3BBA","ini":"LU"},{"id":"p17","nome":"Priscila","esp":"Médico","color":"#BA903B","ini":"PR"},{"id":"p18","nome":"André","esp":"Médico","color":"#3BBAB5","ini":"AN"},{"id":"p19","nome":"Laís","esp":"Psicologia","color":"#BA3B9A","ini":"LA"},{"id":"p20","nome":"Gabriela","esp":"Psicologia","color":"#75BA3B","ini":"GA"},{"id":"p21","nome":"Rosana","esp":"Psicologia","color":"#3B50BA","ini":"RO"},{"id":"p22","nome":"Jeniffer","esp":"Psicologia","color":"#BA4B3B","ini":"JE"},{"id":"p23","nome":"Vitória","esp":"Psicologia","color":"#3BBA70","ini":"VI"},{"id":"p24","nome":"Yuri","esp":"Psicologia","color":"#953BBA","ini":"YU"},{"id":"p25","nome":"Michelle","esp":"Psicologia","color":"#BABA3B","ini":"MI"},{"id":"p26","nome":"Mara","esp":"Psicologia","color":"#3B94BA","ini":"MA"},{"id":"p27","nome":"Mariana","esp":"Neuropsicologia","color":"#BA3B6F","ini":"MA"},{"id":"p28","nome":"Ana Maria","esp":"Psicopedagogia","color":"#4ABA3B","ini":"AM"},{"id":"p29","nome":"Daiane","esp":"Psicopedagogia","color":"#503BBA","ini":"DA"},{"id":"p30","nome":"Hugo","esp":"Fonoaudiologia","color":"#BA763B","ini":"HU"},{"id":"p31","nome":"Aline","esp":"Fonoaudiologia","color":"#3BBA9B","ini":"AL"},{"id":"p32","nome":"Lara","esp":"Fonoaudiologia","color":"#BA3BB4","ini":"LA"},{"id":"p33","nome":"Mayumi","esp":"Psicologia Adolescência/Infantil","color":"#8FBA3B","ini":"MA"},{"id":"p34","nome":"Terapia ABA","esp":"ABA","color":"#3B6ABA","ini":"TA"},{"id":"p35","nome":"Mona","esp":"Psicomotricidade","color":"#BA3B45","ini":"MO"},{"id":"p36","nome":"Sandra","esp":"Musicoterapia","color":"#3BBA56","ini":"SA"},{"id":"p37","nome":"Eduardo","esp":"Terapia Ocupacional","color":"#7B3BBA","ini":"ED"}];
+const ROOMS_SEED=[{"id":"UNIDADE 1|3º ANDAR|SALA 31","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 31","ordem":0,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 32","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 32","ordem":1,"profs":["p01","p02"],"m":[["p01","p01","p01"],["p01","p01","p01"],["p01","p01","p01"],["p01","p01","p01"],["p01","p01","p01"],["p01","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 33","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 33","ordem":2,"profs":["p03"],"m":[["","p03","p03"],["","p03","p03"],["","p03","p03"],["","p03","p03"],["","p03","p03"],["p03","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 34","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 34","ordem":3,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 35","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 35","ordem":4,"profs":["p04","p05"],"m":[["p04","p04","p04"],["p04","p04","p04"],["p04","",""],["p04","p04","p04"],["p04","",""],["","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 36","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 36","ordem":5,"profs":["p06"],"m":[["p06","",""],["","p06","p06"],["","p06","p06"],["","p06","p06"],["p06","",""],["","#X","#X"]]},{"id":"UNIDADE 1|3º ANDAR|SALA 37","u":"UNIDADE 1","fl":"3º ANDAR","sala":"SALA 37","ordem":6,"profs":["p07"],"m":[["p07","p07","p07"],["p07","p07","p07"],["p07","p07","p07"],["p07","p07",""],["p07","",""],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 21","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 21","ordem":7,"profs":["p08"],"m":[["p08","p08","p08"],["p08","p08","p08"],["p08","p08","p08"],["p08","p08","p08"],["p08","p08","p08"],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 22","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 22","ordem":8,"profs":["p09"],"m":[["p09","p09","p09"],["p09","p09","p09"],["p09","p09","p09"],["p09","p09","p09"],["p09","p09","p09"],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 23","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 23","ordem":9,"profs":["p10"],"m":[["p10","p10",""],["p10","p10",""],["p10","p10",""],["p10","p10",""],["p10","p10",""],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 24","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 24","ordem":10,"profs":["p11"],"m":[["","p11","p11"],["p11","",""],["p11","p11",""],["p11","p11","p11"],["p11","p11",""],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 25","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 25","ordem":11,"profs":["p12","p13"],"m":[["","",""],["p12","",""],["","",""],["","p12","p12"],["p12","",""],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 26","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 26","ordem":12,"profs":["p14","p15"],"m":[["","p14","p14"],["","",""],["","p14","p14"],["","p14","p14"],["p14","p14","p14"],["","#X","#X"]]},{"id":"UNIDADE 1|2º ANDAR|SALA 27","u":"UNIDADE 1","fl":"2º ANDAR","sala":"SALA 27","ordem":13,"profs":["p16","p17","p18"],"m":[["p16","p16","p16"],["p16","p16","p16"],["","p16","p16"],["p16","p16","p16"],["","p16","p16"],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 11","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 11","ordem":14,"profs":["p19"],"m":[["p19","p19","p19"],["p19","p19","p19"],["p19","p19","p19"],["p19","p19","p19"],["p19","p19","p19"],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 12","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 12","ordem":15,"profs":["p20"],"m":[["p20","p20","p20"],["p20","p20","p20"],["p20","p20","p20"],["p20","p20","p20"],["p20","p20","p20"],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 13","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 13","ordem":16,"profs":["p21","p22"],"m":[["","p21","p21"],["p21","p21","p21"],["p21","p21","p21"],["p21","p21","p21"],["p21","p21",""],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 14","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 14","ordem":17,"profs":["p23"],"m":[["p23","p23","p23"],["p23","p23",""],["p23","p23","p23"],["p23","p23","p23"],["","",""],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 15","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 15","ordem":18,"profs":["p24","p25"],"m":[["p24","p24","p24"],["p24","p24","p24"],["p24","p24","p24"],["p24","p24","p24"],["p24","p24","p24"],["p24","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 16","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 16","ordem":19,"profs":["p26"],"m":[["","p26","p26"],["","p26","p26"],["p26","",""],["","p26","p26"],["p26","",""],["","#X","#X"]]},{"id":"UNIDADE 1|1º ANDAR|SALA 17","u":"UNIDADE 1","fl":"1º ANDAR","sala":"SALA 17","ordem":20,"profs":["p27","p22"],"m":[["p27","",""],["p27","",""],["p27","p27","p27"],["p27","",""],["p27","",""],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 11","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 11","ordem":21,"profs":["p28"],"m":[["p28","p28",""],["p28","p28",""],["p28","p28",""],["p28","p28",""],["p28","p28",""],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 12","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 12","ordem":22,"profs":["p29"],"m":[["p29","",""],["p29","",""],["p29","",""],["p29","",""],["p29","",""],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 13","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 13","ordem":23,"profs":["p30"],"m":[["p30","p30","p30"],["p30","p30","p30"],["p30","p30","p30"],["p30","p30","p30"],["p30","p30","p30"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 14","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 14","ordem":24,"profs":["p31"],"m":[["p31","p31","p31"],["p31","p31","p31"],["p31","p31","p31"],["p31","p31","p31"],["p31","p31","p31"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 15","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 15","ordem":25,"profs":["p32"],"m":[["p32","p32","p32"],["","",""],["","p32","p32"],["","",""],["p32","",""],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 16","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 16","ordem":26,"profs":["p33"],"m":[["p33","p33","p33"],["p33","p33","p33"],["p33","p33","p33"],["p33","p33","p33"],["p33","p33","p33"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 17","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 17","ordem":27,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 18","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 18","ordem":28,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 19","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 19","ordem":29,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 20","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 20","ordem":30,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 21","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 21","ordem":31,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 22","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 22","ordem":32,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 23","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 23","ordem":33,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|1º ANDAR|SALA 24","u":"UNIDADE 2","fl":"1º ANDAR","sala":"SALA 24","ordem":34,"profs":["p34"],"m":[["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["p34","p34","p34"],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 01","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 01","ordem":35,"profs":["p35"],"m":[["p35","p35","p35"],["p35","p35","p35"],["p35","p35","p35"],["","",""],["p35","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 02","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 02","ordem":36,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 03","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 03","ordem":37,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 04","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 04","ordem":38,"profs":["p36"],"m":[["","",""],["","p36","p36"],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 05","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 05","ordem":39,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 06","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 06","ordem":40,"profs":[],"m":[["","",""],["","",""],["","",""],["","",""],["","",""],["","#X","#X"]]},{"id":"UNIDADE 2|TÉRREO|SALA 07","u":"UNIDADE 2","fl":"TÉRREO","sala":"SALA 07","ordem":41,"profs":["p37"],"m":[["p37","p37","p37"],["p37","p37","p37"],["p37","p37","p37"],["p37","p37","p37"],["","",""],["","#X","#X"]]}];
+
+const UNITS=["UNIDADE 1","UNIDADE 2"];
 const DAYS=["2\u00aa","3\u00aa","4\u00aa","5\u00aa","6\u00aa","S\u00e1b"];
-const LS_KEY="equilibrium_salas_v1";
-let SB=null, mode="local", state=[], rtChannel=null;
+const CLOSED="#X", FREE="";
+const PROFS_ID="__PROFS__";
+const LS_ROOMS="equilibrium_salas_v2", LS_PROFS="equilibrium_profs_v2";
+let SB=null, mode="local", state=[], profs=[], rtChannel=null, activePen={};
 const $=id=>document.getElementById(id);
+const clone=x=>JSON.parse(JSON.stringify(x));
 function cleanUrl(u){ return (u||'').trim().replace(/\/rest\/v1\/?$/i,'').replace(/\/+$/,''); }
 function makeClient(){ try{ return (SUPABASE_URL&&SUPABASE_KEY)?supabase.createClient(cleanUrl(SUPABASE_URL),(SUPABASE_KEY||'').trim()):null; }catch(e){ return null; } }
 SB=makeClient();
-const clone=x=>JSON.parse(JSON.stringify(x));
 function setStatus(t,cls){const e=$('status');e.textContent=t;e.className='status '+cls;}
+function profById(id){ return profs.find(p=>p.id===id)||null; }
+function nextPid(){ let n=1; while(profs.some(p=>p.id==='p'+String(n).padStart(2,'0')))n++; return 'p'+String(n).padStart(2,'0'); }
+function ini(nm){ const ps=nm.replace(/\//g,' ').split(/\s+/).filter(Boolean); return (ps.length>=2?(ps[0][0]+ps[1][0]):nm.slice(0,2)).toUpperCase(); }
+function textOn(hex){ const c=hex.replace('#',''); if(c.length<6)return '#fff';
+  const r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
+  return (0.299*r+0.587*g+0.114*b)>150?'#16243A':'#fff'; }
 
-async function loadRooms(){
+// ---------- migracao de formato antigo (numeros) -> novo (ids) ----------
+function isOldRoom(r){ return r && r.m && typeof r.m[0][0]==='number'; }
+function migrateOld(rows){
+  // constroi profs a partir de nomes e converte celulas
+  const map={}; const np=[];
+  rows.forEach(r=>{ (r.name||'').split(',').map(s=>s.trim()).forEach(nm=>{
+    if(!nm||nm==='Livre'||map[nm])return; const id=nextPidLocal(np);
+    map[nm]={id,nome:nm,esp:r.esp||'',color:r.color||'#2E75B6',ini:ini(nm)}; np.push(map[nm]); }); });
+  const nr=rows.map(r=>{ const ids=(r.name||'').split(',').map(s=>s.trim()).filter(n=>n&&n!=='Livre').map(n=>map[n].id);
+    const def=ids[0]||null;
+    const m=r.m.map(day=>day.map(v=>v===2?CLOSED:(v===1?(def||FREE):FREE)));
+    return {id:r.id,u:r.u,fl:r.fl,sala:r.sala,ordem:r.ordem,profs:ids,m}; });
+  return {profs:np,rooms:nr};
+}
+function nextPidLocal(arr){ let n=1; while(arr.some(p=>p.id==='p'+String(n).padStart(2,'0')))n++; return 'p'+String(n).padStart(2,'0'); }
+
+// ---------- carga ----------
+async function loadAll(){
   if(SB){ try{
       let r=await SB.from('salas').select('*').order('ordem'); if(r.error)throw r.error;
       if(!r.data||!r.data.length){ await seedDB(); r=await SB.from('salas').select('*').order('ordem'); }
       mode="db"; setStatus("Conectado ao banco","ok");
-      return r.data.map(d=>Object.assign({id:d.id,ordem:d.ordem,u:d.unidade,fl:d.andar,sala:d.sala},d.dados));
+      const prow=r.data.find(d=>d.id===PROFS_ID);
+      const rrows=r.data.filter(d=>d.id!==PROFS_ID)
+        .map(d=>Object.assign({id:d.id,ordem:d.ordem,u:d.unidade,fl:d.andar,sala:d.sala},d.dados));
+      if(prow && prow.dados && prow.dados.profs){ profs=prow.dados.profs; }
+      if(rrows.length && isOldRoom(rrows[0])){ const mg=migrateOld(rrows); profs=mg.profs; state=mg.rooms; await seedDB(); return; }
+      if(!profs.length) profs=clone(PROFS_SEED);
+      state=rrows; return;
     }catch(e){ console.warn('Supabase:',e);
       const msg=((e&&e.message)||'').toLowerCase();
       if(msg.includes('relation')||msg.includes('does not exist')||(e&&e.code==='42P01')) setStatus("Tabela 'salas' nao existe \u2014 rode o schema.sql","err");
@@ -126,31 +200,71 @@ async function loadRooms(){
       else if(msg.includes('failed to fetch')||msg.includes('networkerror')) setStatus("Sem conexao \u2014 confira a URL","err");
       else setStatus("Banco indisponivel \u2014 modo local","err");
       mode="local"; } }
-  const ls=localStorage.getItem(LS_KEY);
-  if(ls){ setStatus("Modo local (navegador)","local"); return JSON.parse(ls);}
-  setStatus("Modo local","local"); return clone(SEED);
+  const lp=localStorage.getItem(LS_PROFS), lr=localStorage.getItem(LS_ROOMS);
+  if(lr){ setStatus("Modo local (navegador)","local"); state=JSON.parse(lr); profs=lp?JSON.parse(lp):clone(PROFS_SEED); return; }
+  setStatus("Modo local","local"); state=clone(ROOMS_SEED); profs=clone(PROFS_SEED);
 }
 async function seedDB(){
-  const rows=SEED.map(r=>({id:r.id,unidade:r.u,andar:r.fl,sala:r.sala,ordem:r.ordem,dados:{name:r.name,esp:r.esp,color:r.color,m:r.m}}));
-  await SB.from('salas').upsert(rows);
+  const rows=state.length?state:clone(ROOMS_SEED);
+  const psrc=profs.length?profs:clone(PROFS_SEED);
+  const payload=rows.map(r=>({id:r.id,unidade:r.u,andar:r.fl,sala:r.sala,ordem:r.ordem,dados:{profs:r.profs,m:r.m}}));
+  payload.push({id:PROFS_ID,unidade:'_',andar:'_',sala:'_',ordem:-1,dados:{profs:psrc}});
+  await SB.from('salas').upsert(payload);
 }
 async function saveRoom(r){
-  if(mode==="db"&&SB){ try{ await SB.from('salas').upsert({id:r.id,unidade:r.u,andar:r.fl,sala:r.sala,ordem:r.ordem,dados:{name:r.name,esp:r.esp,color:r.color,m:r.m},updated_at:new Date().toISOString()}); return; }
+  if(mode==="db"&&SB){ try{ await SB.from('salas').upsert({id:r.id,unidade:r.u,andar:r.fl,sala:r.sala,ordem:r.ordem,dados:{profs:r.profs,m:r.m},updated_at:new Date().toISOString()}); return; }
     catch(e){ console.warn(e); setStatus("Falha ao salvar \u2014 modo local","err"); mode="local"; } }
-  localStorage.setItem(LS_KEY,JSON.stringify(state));
+  persistLocal();
 }
-function persistLocal(){ if(mode!=="db") localStorage.setItem(LS_KEY,JSON.stringify(state)); }
+async function saveProfs(){
+  if(mode==="db"&&SB){ try{ await SB.from('salas').upsert({id:PROFS_ID,unidade:'_',andar:'_',sala:'_',ordem:-1,dados:{profs},updated_at:new Date().toISOString()}); return; }
+    catch(e){ console.warn(e); setStatus("Falha ao salvar \u2014 modo local","err"); mode="local"; } }
+  persistLocal();
+}
+function persistLocal(){ if(mode!=="db"){ localStorage.setItem(LS_ROOMS,JSON.stringify(state)); localStorage.setItem(LS_PROFS,JSON.stringify(profs)); } }
 
+// ---------- KPIs ----------
 function recalc(){
   let free=0,used=0,total=0,full=0; const bf={};
   state.forEach(r=>{ let rf=0,rt=0;
-    for(let d=0;d<6;d++)for(let s=0;s<3;s++){const v=r.m[d][s]; if(v===2)continue; rt++; total++; if(v===1)used++; else{free++;rf++;}}
-    if(rf===rt)full++; const k=r.fl; bf[k]=(bf[k]||0)+rf; });
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++){const v=r.m[d][s]; if(v===CLOSED)continue; rt++; total++; if(v===FREE){free++;rf++;} else used++;}
+    if(rf===rt)full++; bf[r.fl]=(bf[r.fl]||0)+rf; });
   $('kFree').textContent=free; $('kUsed').textContent=used; $('kRooms').textContent=full;
   $('kOcc').textContent=(total?Math.round(used/total*1000)/10:0)+'%';
   $('perfloor').textContent=Object.entries(bf).map(([k,v])=>k+': '+v).join('  \u00b7  ');
 }
+
+// ---------- legenda global ----------
+function renderLegend(){
+  const box=$('legend'); const used=new Set();
+  state.forEach(r=>r.profs.forEach(id=>used.add(id)));
+  state.forEach(r=>r.m.forEach(day=>day.forEach(v=>{ if(v!==FREE&&v!==CLOSED)used.add(v); })));
+  const list=profs.filter(p=>used.has(p.id));
+  const groups={};
+  list.forEach(p=>{ const g=p.esp||'Sem especialidade'; (groups[g]=groups[g]||[]).push(p); });
+  let h='<h4>Legenda &middot; profissionais</h4>';
+  Object.keys(groups).sort().forEach(g=>{
+    h+='<div class="leggrp"><div class="gt">'+g+'</div><div class="legrow">';
+    groups[g].sort((a,b)=>a.nome.localeCompare(b.nome)).forEach(p=>{
+      h+='<span class="legitem"><s class="sw" style="background:'+p.color+'"></s>'+p.nome+'</span>'; });
+    h+='</div></div>';
+  });
+  h+='<div class="legstate"><s style="background:#EEF2F7;border:1px solid #d7e0ec"></s> livre &nbsp; <s style="background:repeating-linear-gradient(45deg,#DDE3EC 0,#DDE3EC 2px,#EEF2F7 2px,#EEF2F7 4px)"></s> fechado &nbsp;&middot;&nbsp; P1 7&ndash;12h &middot; P2 12&ndash;16h &middot; P3 16&ndash;20h</div>';
+  box.innerHTML=h;
+}
+
+// ---------- render salas ----------
+function cellStyle(btn,v){
+  btn.className='cellbtn'; btn.textContent=''; btn.removeAttribute('title'); btn.style.background=''; btn.style.color='';
+  if(v===CLOSED){ btn.classList.add('closed'); btn.disabled=true; return; }
+  btn.disabled=false;
+  if(v===FREE) return;
+  const p=profById(v);
+  if(p){ btn.style.background=p.color; btn.style.color=textOn(p.color); btn.textContent=p.ini||ini(p.nome); btn.title=p.nome; }
+  else { btn.style.background='#B9C3D1'; btn.textContent='?'; }
+}
 function render(){
+  renderLegend();
   const app=$('app'); app.innerHTML='';
   UNITS.forEach(un=>{
     const ut=document.createElement('div'); ut.className='unittab'; ut.textContent=un; app.appendChild(ut);
@@ -159,51 +273,117 @@ function render(){
       const fd=document.createElement('div'); fd.className='floor'; fd.innerHTML='<div class="floorh">'+fl+'</div>';
       const g=document.createElement('div'); g.className='grid';
       state.forEach((r,ri)=>{ if(r.u!==un||r.fl!==fl)return;
-        const card=document.createElement('div'); card.className='card'; card.style.setProperty('--c',r.color);
+        if(activePen[ri]===undefined) activePen[ri]=r.profs[0]||null;
+        if(r.profs.length && !r.profs.includes(activePen[ri])) activePen[ri]=r.profs[0];
+        const card=document.createElement('div'); card.className='card';
+        const c0=(profById(r.profs[0])||{}).color||'#8FA0B4'; card.style.setProperty('--c',c0);
         let h='<div class="sname">'+r.sala+'<button class="ed" data-edit="'+ri+'">editar</button></div>';
-        h+='<div class="pname">'+(r.name||'')+(r.esp?' \u00b7 '+r.esp:'')+'</div>';
+        // pens
+        h+='<div class="pens">';
+        if(r.profs.length){ r.profs.forEach(id=>{ const p=profById(id); if(!p)return;
+          h+='<button class="pen'+(activePen[ri]===id?' penon':'')+'" data-pen="'+ri+'" data-pid="'+id+'"><span class="dot" style="background:'+p.color+'"></span>'+p.nome+'</button>'; });
+        } else { h+='<span class="pen nopen">sem profissional</span>'; }
+        h+='<button class="pen addp" data-edit="'+ri+'">+ profissional</button></div>';
+        // grid
         h+='<table class="tg"><tr><th></th>'+DAYS.map(d=>'<th>'+d+'</th>').join('')+'</tr>';
         for(let s=0;s<3;s++){ h+='<tr><td class="lbl">P'+(s+1)+'</td>';
-          for(let d=0;d<6;d++){ const v=r.m[d][s];
-            h+= v===2 ? '<td><button class="cellbtn closed" disabled></button></td>'
-              : '<td><button class="cellbtn'+(v===1?' on':'')+'" data-r="'+ri+'" data-d="'+d+'" data-s="'+s+'"></button></td>'; }
+          for(let d=0;d<6;d++){ h+='<td><button class="cellbtn" data-r="'+ri+'" data-d="'+d+'" data-s="'+s+'"></button></td>'; }
           h+='</tr>'; }
         h+='</table><div class="cardfoot"><span><b class="rf">\u00b7</b> livres</span><span><button class="mini" data-occ="'+ri+'">ocupar</button> <button class="mini" data-free="'+ri+'">liberar</button></span></div>';
-        card.innerHTML=h; g.appendChild(card);
+        card.innerHTML=h;
+        // aplica estilos das celulas
+        card.querySelectorAll('.cellbtn[data-r]').forEach(b=>{ cellStyle(b,r.m[+b.dataset.d][+b.dataset.s]); });
+        g.appendChild(card);
       });
       fd.appendChild(g); app.appendChild(fd);
     });
   });
   bind(); footers(); recalc();
 }
-function footers(){ state.forEach((r,ri)=>{ let rf=0; for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(r.m[d][s]===0)rf++;
-  const el=document.querySelectorAll('.card')[ri]; if(el){const b=el.querySelector('.rf'); if(b)b.textContent=rf;} }); }
+function footers(){ const cards=document.querySelectorAll('.card'); let ci=0;
+  state.forEach((r)=>{ let rf=0; for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(r.m[d][s]===FREE)rf++;
+    const el=cards[ci++]; if(el){const b=el.querySelector('.rf'); if(b)b.textContent=rf;} }); }
 function bind(){
-  document.querySelectorAll('.cellbtn[data-r]').forEach(b=>{ b.onclick=()=>{const r=+b.dataset.r,d=+b.dataset.d,s=+b.dataset.s;
-    state[r].m[d][s]=state[r].m[d][s]===1?0:1; b.classList.toggle('on'); footers(); recalc(); saveRoom(state[r]); persistLocal();}; });
-  document.querySelectorAll('[data-occ]').forEach(b=>{ b.onclick=()=>{const r=+b.dataset.occ;
-    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[r].m[d][s]!==2)state[r].m[d][s]=1; render(); saveRoom(state[r]); persistLocal();}; });
-  document.querySelectorAll('[data-free]').forEach(b=>{ b.onclick=()=>{const r=+b.dataset.free;
-    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[r].m[d][s]!==2)state[r].m[d][s]=0; render(); saveRoom(state[r]); persistLocal();}; });
+  document.querySelectorAll('.pen[data-pen]').forEach(b=>{ b.onclick=()=>{ const ri=+b.dataset.pen;
+    activePen[ri]=b.dataset.pid;
+    b.parentElement.querySelectorAll('.pen[data-pen]').forEach(x=>x.classList.toggle('penon',x===b)); }; });
+  document.querySelectorAll('.cellbtn[data-r]').forEach(b=>{ b.onclick=()=>{ const ri=+b.dataset.r,d=+b.dataset.d,s=+b.dataset.s;
+    const pen=activePen[ri];
+    if(!pen){ alert('Esta sala nao tem profissional. Clique em "+ profissional" para adicionar.'); return; }
+    state[ri].m[d][s]= state[ri].m[d][s]===pen ? FREE : pen;
+    cellStyle(b,state[ri].m[d][s]); footers(); recalc(); saveRoom(state[ri]); }; });
+  document.querySelectorAll('[data-occ]').forEach(b=>{ b.onclick=()=>{ const ri=+b.dataset.occ; const pen=activePen[ri];
+    if(!pen){ alert('Escolha um profissional primeiro.'); return; }
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[ri].m[d][s]!==CLOSED)state[ri].m[d][s]=pen; render(); saveRoom(state[ri]); }; });
+  document.querySelectorAll('[data-free]').forEach(b=>{ b.onclick=()=>{ const ri=+b.dataset.free;
+    for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(state[ri].m[d][s]!==CLOSED)state[ri].m[d][s]=FREE; render(); saveRoom(state[ri]); }; });
   document.querySelectorAll('[data-edit]').forEach(b=>{ b.onclick=()=>openEdit(+b.dataset.edit); });
 }
+
+// ---------- modal editar sala ----------
 let editIdx=-1;
+function renderProfChecklist(sel){
+  const box=$('mProfList'); box.innerHTML='';
+  profs.slice().sort((a,b)=>a.nome.localeCompare(b.nome)).forEach(p=>{
+    const row=document.createElement('label'); row.className='chkitem';
+    row.innerHTML='<input type="checkbox" value="'+p.id+'"'+(sel.includes(p.id)?' checked':'')+'>'+
+      '<s class="sw" style="background:'+p.color+'"></s>'+p.nome+
+      ' <span style="color:#9aa7b8;font-size:10px;">'+(p.esp||'')+'</span>';
+    box.appendChild(row);
+  });
+}
 function openEdit(i){ editIdx=i; const r=state[i];
-  $('mTitle').textContent='Editar '+r.sala; $('mSala').value=r.sala||''; $('mName').value=r.name||''; $('mEsp').value=r.esp||'';
-  $('mColor').value=(r.color||'#2E75B6').slice(0,7); $('modal').classList.add('show'); }
+  $('mTitle').textContent='Editar '+r.sala; $('mSala').value=r.sala||'';
+  renderProfChecklist(r.profs||[]); $('modal').classList.add('show'); }
+$('mNewAdd').onclick=async()=>{ const nome=$('mNewNome').value.trim(); if(!nome){alert('Informe o nome.');return;}
+  const p={id:nextPid(),nome,esp:$('mNewEsp').value.trim(),color:$('mNewColor').value,ini:ini(nome)};
+  profs.push(p); await saveProfs();
+  const sel=[...$('mProfList').querySelectorAll('input:checked')].map(x=>x.value); sel.push(p.id);
+  renderProfChecklist(sel); $('mNewNome').value=''; $('mNewEsp').value=''; };
 $('mCancel').onclick=()=>$('modal').classList.remove('show');
 $('mSave').onclick=()=>{ const r=state[editIdx];
-  const novaSala=$('mSala').value.trim(); if(novaSala) r.sala=novaSala;
-  r.name=$('mName').value.trim(); r.esp=$('mEsp').value.trim(); r.color=$('mColor').value;
-  $('modal').classList.remove('show'); render(); saveRoom(r); persistLocal(); };
+  const ns=$('mSala').value.trim(); if(ns) r.sala=ns;
+  r.profs=[...$('mProfList').querySelectorAll('input:checked')].map(x=>x.value);
+  activePen[editIdx]=r.profs[0]||null;
+  $('modal').classList.remove('show'); render(); saveRoom(r); };
+
+// ---------- modal profissionais ----------
+function renderProfManager(){
+  const box=$('pmList'); box.innerHTML='';
+  profs.slice().sort((a,b)=>(a.esp||'').localeCompare(b.esp||'')||a.nome.localeCompare(b.nome)).forEach(p=>{
+    const row=document.createElement('div'); row.className='prow';
+    row.innerHTML='<input type="color" value="'+p.color+'" data-pc="'+p.id+'">'+
+      '<input type="text" value="'+p.nome.replace(/"/g,'&quot;')+'" data-pn="'+p.id+'">'+
+      '<input type="text" class="espi" value="'+(p.esp||'').replace(/"/g,'&quot;')+'" data-pe="'+p.id+'" placeholder="esp.">'+
+      '<button class="del" data-pd="'+p.id+'">excluir</button>';
+    box.appendChild(row);
+  });
+  box.querySelectorAll('[data-pc]').forEach(el=>el.onchange=async()=>{ const p=profById(el.dataset.pc); p.color=el.value; await saveProfs(); render(); });
+  box.querySelectorAll('[data-pn]').forEach(el=>el.onchange=async()=>{ const p=profById(el.dataset.pn); p.nome=el.value.trim()||p.nome; p.ini=ini(p.nome); await saveProfs(); render(); });
+  box.querySelectorAll('[data-pe]').forEach(el=>el.onchange=async()=>{ const p=profById(el.dataset.pe); p.esp=el.value.trim(); await saveProfs(); render(); });
+  box.querySelectorAll('[data-pd]').forEach(el=>el.onclick=async()=>{ const id=el.dataset.pd; const p=profById(id);
+    if(!confirm('Excluir '+p.nome+'? Os turnos dele(a) ficarao livres e a sala perde essa caneta.'))return;
+    profs=profs.filter(x=>x.id!==id);
+    state.forEach(r=>{ r.profs=r.profs.filter(x=>x!==id);
+      for(let d=0;d<6;d++)for(let s=0;s<3;s++)if(r.m[d][s]===id)r.m[d][s]=FREE; });
+    await saveProfs(); if(mode==='db'&&SB){ for(const r of state) await saveRoom(r);} persistLocal();
+    renderProfManager(); render(); });
+}
+$('profBtn').onclick=()=>{ renderProfManager(); $('pmodal').classList.add('show'); };
+$('pmClose').onclick=()=>$('pmodal').classList.remove('show');
+$('pmAdd').onclick=async()=>{ const nome=$('pmNome').value.trim(); if(!nome){alert('Informe o nome.');return;}
+  profs.push({id:nextPid(),nome,esp:$('pmEsp').value.trim(),color:$('pmColor').value,ini:ini(nome)});
+  await saveProfs(); $('pmNome').value=''; $('pmEsp').value=''; renderProfManager(); render(); };
+
+// ---------- toolbar ----------
 $('print').onclick=()=>{ const f=$('kFree').textContent,o=$('kOcc').textContent,rm=$('kRooms').textContent;
   $('printtitle').innerHTML='<div class="pt-h">Guia de Salas \u2014 situacao atual</div><div class="pt-s">Grupo Equilibrium \u00b7 base do croqui de 10/06/2026 \u00b7 '+f+' turnos livres \u00b7 '+o+' de ocupacao \u00b7 '+rm+' salas totalmente livres</div>';
   window.print(); };
-$('reset').onclick=async()=>{ if(!confirm('Restaurar todas as salas para a agenda base? As alteracoes atuais serao substituidas.'))return;
-  state=clone(SEED); render(); if(mode==='db'&&SB){ await seedDB(); } persistLocal(); };
-$('reload').onclick=async()=>{ state=await loadRooms(); render(); };
+$('reset').onclick=async()=>{ if(!confirm('Restaurar salas e profissionais para a base? As alteracoes atuais serao substituidas.'))return;
+  state=clone(ROOMS_SEED); profs=clone(PROFS_SEED); activePen={}; render(); if(mode==='db'&&SB){ await seedDB(); } persistLocal(); };
+$('reload').onclick=async()=>{ await loadAll(); activePen={}; render(); };
 function subscribe(){ if(mode==='db'&&SB){ if(rtChannel){try{SB.removeChannel(rtChannel);}catch(e){}}
-  rtChannel=SB.channel('salas-rt').on('postgres_changes',{event:'*',schema:'public',table:'salas'},async()=>{ state=await loadRooms(); render(); }).subscribe(); } }
+  rtChannel=SB.channel('salas-rt').on('postgres_changes',{event:'*',schema:'public',table:'salas'},async()=>{ await loadAll(); render(); }).subscribe(); } }
 
-(async function(){ state=await loadRooms(); render(); subscribe(); })();
+(async function(){ await loadAll(); render(); subscribe(); })();
 </script></body></html>
